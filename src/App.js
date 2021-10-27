@@ -1,25 +1,35 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from "react";
+import Moives from "./components/Moives";
+import { getGenres } from "./services/fakeGenreService";
+import { deleteMovie, getMovies } from "./services/fakeMovieService";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+export default class App extends Component {
+   state = {
+      movies: [],
+      genre: [],
+   };
+
+   componentDidMount() {
+      this.setState({ movies: getMovies() });
+      this.setState({ genre: getGenres() });
+   }
+   handleDelete = (id) => {
+      deleteMovie(id);
+      this.setState({ movies: getMovies() });
+   };
+   handlePaginate = (pageNumber) => {
+      this.setState({ currentPage: pageNumber });
+   };
+   render() {
+      return (
+         <div>
+            <Moives
+               handleDelete={this.handleDelete}
+               handlePaginate={this.handlePaginate}
+               allMovies={this.state.movies}
+               genre={this.state.genre}
+            />
+         </div>
+      );
+   }
 }
-
-export default App;
