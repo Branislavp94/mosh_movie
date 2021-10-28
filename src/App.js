@@ -1,35 +1,32 @@
 import React, { Component } from "react";
-import Moives from "./components/Moives";
-import { getGenres } from "./services/fakeGenreService";
-import { deleteMovie, getMovies } from "./services/fakeMovieService";
+import Movies from "./components/movies";
+import { Switch, Route, Redirect } from "react-router-dom";
+import Customers from "./components/Customers";
+import Rentail from "./components/Rentail";
+import NotFound from "./components/NotFound";
+import "./App.css";
+import Navbar from "./components/Navbar";
+import FormMovie from "./components/FormMovie";
 
-export default class App extends Component {
-   state = {
-      movies: [],
-      genre: [],
-   };
-
-   componentDidMount() {
-      this.setState({ movies: getMovies() });
-      this.setState({ genre: getGenres() });
-   }
-   handleDelete = (id) => {
-      deleteMovie(id);
-      this.setState({ movies: getMovies() });
-   };
-   handlePaginate = (pageNumber) => {
-      this.setState({ currentPage: pageNumber });
-   };
+class App extends Component {
    render() {
       return (
-         <div>
-            <Moives
-               handleDelete={this.handleDelete}
-               handlePaginate={this.handlePaginate}
-               allMovies={this.state.movies}
-               genre={this.state.genre}
-            />
-         </div>
+         <React.Fragment>
+            <Navbar />
+            <div className="container p-5">
+               <Switch>
+                  <Route path="/movies/:id" component={FormMovie}></Route>
+                  <Route path="/movies" component={Movies}></Route>
+                  <Route path="/customers" component={Customers}></Route>
+                  <Route path="/rentail" component={Rentail}></Route>
+                  <Route path="/not-found" component={NotFound}></Route>
+                  <Redirect from="/" to="/movies" exact />
+                  <Redirect to="/not-found" />
+               </Switch>
+            </div>
+         </React.Fragment>
       );
    }
 }
+
+export default App;
