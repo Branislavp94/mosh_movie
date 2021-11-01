@@ -1,36 +1,37 @@
-import React, { Component } from "react";
-import Movies from "./components/movies";
-import { Switch, Route, Redirect } from "react-router-dom";
-import Customers from "./components/Customers";
-import Rentail from "./components/Rentail";
-import NotFound from "./components/NotFound";
-import "./App.css";
-import Navbar from "./components/Navbar";
-import FormMovie from "./components/FormMovie";
-import Login from "./components/Login";
-import Register from "./components/Register";
+import React, { Component } from 'react';
+import { Redirect, Route, Switch } from 'react-router-dom';
+import './App.css';
+import Customers from './components/customers';
+import LoginForm from './components/loginForm';
+import MovieForm from './components/movieForm';
+import Movies from './components/movies';
+import NavBar from './components/navBar';
+import NotFound from './components/notFound';
+import RegisterForm from './components/registerForm';
+import Rentals from './components/rentals';
 
 class App extends Component {
-   render() {
-      return (
-         <React.Fragment>
-            <Navbar />
-            <div className="container p-5">
-               <Switch>
-                  <Route path="/register" component={Register}></Route>
-                  <Route path="/login" component={Login}></Route>
-                  <Route path="/movies/:id" component={FormMovie}></Route>
-                  <Route path="/movies" component={Movies}></Route>
-                  <Route path="/customers" component={Customers}></Route>
-                  <Route path="/rentail" component={Rentail}></Route>
-                  <Route path="/not-found" component={NotFound}></Route>
-                  <Redirect from="/" to="/movies" exact />
-                  <Redirect to="/not-found" />
-               </Switch>
-            </div>
-         </React.Fragment>
-      );
-   }
+  render() {
+    return (
+      <>
+        <NavBar />
+        <main className='container'>
+          <Switch>
+            <Route path='/register' component={RegisterForm} />
+            <Route path='/login' component={LoginForm} />
+            <Route path='/movies/:id' component={MovieForm} />
+            <Route path='/movies/new' component={MovieForm} />
+            <Route path='/movies' component={Movies} />
+            <Route path='/customers' component={Customers} />
+            <Route path='/rentals' component={Rentals} />
+            <Route path='/not-found' component={NotFound} />
+            <Redirect from='/' exact to='/movies' />
+            <Redirect to='/not-found' />
+          </Switch>
+        </main>
+      </>
+    );
+  }
 }
 
 export default App;
